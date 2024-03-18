@@ -42,7 +42,14 @@ def buildnml(case, caseroot, compname):
     mali_use_albany   = case.get_value("MALI_USE_ALBANY")
     mali_dynamic      = case.get_value("MALI_DYNAMIC")
     stream_name       = 'streams.landice'
+
     albany_input_name = 'albany_input.yaml'
+    mach              = case.get_value("MACH")
+    if mach == "pm-gpu":
+      albany_input_name_arch = 'albany_input_gpu.yaml'
+    else:
+      albany_input_name_arch = 'albany_input_cpu.yaml'
+
 
     maliconf_dir = os.path.join(casebuild, "maliconf")
 
@@ -290,7 +297,7 @@ def buildnml(case, caseroot, compname):
         if os.path.exists("{}/SourceMods/src.mali/{}".format(caseroot, albany_input_name)):
             safe_copy("{}/SourceMods/src.mali/{}".format(caseroot, albany_input_name), os.path.join(rundir, albany_input_name))
         else:
-            safe_copy("{}/components/mpas-albany-landice/bld/namelist_files/{}".format(srcroot, albany_input_name), os.path.join(rundir, albany_input_name))
+            safe_copy("{}/components/mpas-albany-landice/bld/namelist_files/{}".format(srcroot, albany_input_name_arch), os.path.join(rundir, albany_input_name))
 
 ###############################################################################
 def _main_func():
